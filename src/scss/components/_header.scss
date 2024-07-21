@@ -13,6 +13,12 @@
   &__logo {
     display: flex;
 
+		@media screen and (max-width: 700px) {
+			div {
+				display: none;
+			}
+		}
+
     img {
       margin-right: 15px;
     }
@@ -29,4 +35,17 @@
       color: #7b7b7b;
     }
   }
+	
+	@media screen and (max-width: 700px) {
+		&__cart {
+
+			div {
+				display: none;
+			}
+
+			span:first-of-type {
+				display: none;
+			}
+		}
+	}
 }

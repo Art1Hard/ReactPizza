@@ -1,8 +1,32 @@
-function Sort() {
+import { useState } from "react";
+
+function Sort({ value, setValue, isDesc, setIsDesc }) {
+	const [isOpen, setIsOpen] = useState(false);
+	const sorts = [
+		{
+			name: "популярности",
+			sortProperty: "rating"
+		},
+		{
+			name: "цене",
+			sortProperty: "price"
+		},
+		{
+			name: "алфавиту",
+			sortProperty: "title"
+		}
+	];
+	const sortName = value.name;
+
+	const onClickListItem = (index) => {
+		setValue(index);
+		setIsOpen(false);
+	}
+
 	return (
-		<div class="sort">
-			<div class="sort__label">
-				<svg
+		<div className="sort">
+			<div className="sort__label">
+				<svg onClick={() => setIsDesc(!isDesc)} style={{ transform: isDesc ? 'rotate(180deg)' : '' }}
 					width="10"
 					height="6"
 					viewBox="0 0 10 6"
@@ -15,15 +39,21 @@ function Sort() {
 					/>
 				</svg>
 				<b>Сортировка по:</b>
-				<span>популярности</span>
+				<span onClick={() => setIsOpen(!isOpen)}>{sortName}</span>
 			</div>
-			<div class="sort__popup">
-				<ul>
-					<li class="active">популярности</li>
-					<li>цене</li>
-					<li>алфавиту</li>
-				</ul>
-			</div>
+			{
+				isOpen && (
+					<div className="sort__popup">
+						<ul>
+							{
+								sorts.map((obj) => (
+									<li key={obj.sortProperty} onClick={() => onClickListItem(obj)} className={value.sortProperty === obj.sortProperty ? "active" : ""}>{obj.name}</li>
+								))
+							}
+						</ul>
+					</div>
+				)
+			}
 		</div>
 	);
 }

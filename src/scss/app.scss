@@ -21,19 +21,28 @@ body {
   padding: 40px 0;
 
   &__title {
+		font-size: 34px;
+		font-weight: 700;
     margin: 35px 0;
   }
 
   &__items {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+		grid-column-gap: 30px;
+		grid-row-gap: 60px;
+		justify-items: center;
   }
 
   &__top {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+		@media screen and (max-width: 1300px) {
+			flex-direction: column-reverse;
+			row-gap: 20px;
+		}
   }
 }
 
@@ -309,4 +318,8 @@ body {
       font-size: 18px;
     }
   }
+
+	.content__items {
+		display: block;
+	}
 }

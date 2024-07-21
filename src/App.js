@@ -1,31 +1,25 @@
-import React from "react";
+import { Route, Routes } from "react-router-dom"
 import "./scss/app.scss";
 import Header from "./components/Header";
-import Categories from "./components/Categories";
-import Sort from "./components/Sort";
-import PizzaBlock from "./components/PizzaBlock";
+import Home from "./pages/Home";
+import Cart from "./pages/Cart";
+import NotFound from "./pages/NotFound";
+import { useState } from "react";
 
 function App() {
+	const [searchValue, setSearchValue] = useState('');
+
+	console.log(searchValue);
+
 	return (
-		<div class="wrapper">
-			<Header />
-			<div class="content">
-				<div class="container">
-					<div class="content__top">
-						<Categories />
-						<Sort />
-					</div>
-					<h2 class="content__title">Все пиццы</h2>
-					<div class="content__items">
-						<PizzaBlock />
-						<PizzaBlock />
-						<PizzaBlock />
-						<PizzaBlock />
-						<PizzaBlock />
-						<PizzaBlock />
-						<PizzaBlock />
-					</div>
-				</div>
+		<div className="wrapper">
+			<Header searchValue={searchValue} setSearchValue={setSearchValue} />
+			<div className="content">
+				<Routes>
+					<Route path="/" element={<Home searchValue={searchValue} />} />
+					<Route path="/cart" element={<Cart />} />
+					<Route path="*" element={<NotFound />} />
+				</Routes>
 			</div>
 		</div>
 	);
