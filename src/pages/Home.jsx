@@ -1,15 +1,17 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Categories from "../components/Categories";
 import Sort from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock";
 import PizzaSkeleton from "../components/PizzaBlock/Skeleton";
+import { SearchContext } from "../App";
 
-const Home = ({ searchValue }) => {
+const Home = () => {
 	const [pizzas, setPizzas] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const [categoryId, setCategoryId] = useState(0);
 	const [sorts, setSorts] = useState({ name: "популярности", sortProperty: "rating" });
 	const [sortIsDesc, setSortIsDesc] = useState(false);
+	const { searchValue } = useContext(SearchContext);
 
 	const categories = [
 		'Все',
