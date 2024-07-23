@@ -10,14 +10,11 @@ import { useSelector } from "react-redux";
 const Home = () => {
 	const [pizzas, setPizzas] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
-	const [sorts, setSorts] = useState({
-		name: "популярности",
-		sortProperty: "rating",
-	});
-	const [sortIsDesc, setSortIsDesc] = useState(false);
+
 	const { searchValue } = useContext(SearchContext);
 
-	const filterIndex = useSelector((state) => state.filter.value);
+	const { categoryIndex, sort } = useSelector((state) => state.filter);
+	const sortIsDesc = useSelector((state) => state.filter.isDesc);
 	console.log("Home reload");
 
 	const categories = [
@@ -31,9 +28,9 @@ const Home = () => {
 
 	useEffect(() => {
 		const url = new URL("https://66966ea20312447373c28363.mockapi.io/items");
-		if (filterIndex !== 0) url.searchParams.append("category", filterIndex);
+		if (categoryIndex !== 0) url.searchParams.append("category", categoryIndex);
 
-		url.searchParams.append("sortby", sorts.sortProperty);
+		url.searchParams.append("sortby", sort.sortProperty);
 		sortIsDesc
 			? url.searchParams.append("order", "desc")
 			: url.searchParams.append("order", "asc");
@@ -50,7 +47,7 @@ const Home = () => {
 				setIsLoading(false);
 			});
 		window.scrollTo(0, 0);
-	}, [filterIndex, sorts, sortIsDesc, searchValue]);
+	}, [categoryIndex, sort, sortIsDesc, searchValue]);
 
 	const pizzaBlocks = pizzas.map((pizza) => (
 		<PizzaBlock key={pizza.id} {...pizza} />
@@ -64,14 +61,9 @@ const Home = () => {
 		<div className="container">
 			<div className="content__top">
 				<Categories />
-				<Sort
-					value={sorts}
-					setValue={setSorts}
-					isDesc={sortIsDesc}
-					setIsDesc={setSortIsDesc}
-				/>
+				<Sort />
 			</div>
-			<h2 className="content__title">{categories[filterIndex]} пиццы</h2>
+			<h2 className="content__title">{categories[categoryIndex]} пиццы</h2>
 			<div className="content__items">
 				{isLoading ? (
 					pizzaSkeletons

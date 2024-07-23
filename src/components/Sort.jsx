@@ -1,25 +1,33 @@
 import { useState } from "react";
 
-function Sort({ value, setValue, isDesc, setIsDesc }) {
-	const [isOpen, setIsOpen] = useState(false);
-	const sorts = [
-		{
-			name: "популярности",
-			sortProperty: "rating",
-		},
-		{
-			name: "цене",
-			sortProperty: "price",
-		},
-		{
-			name: "алфавиту",
-			sortProperty: "title",
-		},
-	];
-	const sortName = value.name;
+import { useSelector, useDispatch } from "react-redux";
 
-	const onClickListItem = (index) => {
-		setValue(index);
+import { setSort, setIsDesc } from "../redux/slices/filterSlice";
+
+const sorts = [
+	{
+		name: "популярности",
+		sortProperty: "rating",
+	},
+	{
+		name: "цене",
+		sortProperty: "price",
+	},
+	{
+		name: "алфавиту",
+		sortProperty: "title",
+	},
+];
+
+function Sort() {
+	const dispatch = useDispatch();
+	const { sort, isDesc } = useSelector((state) => state.filter);
+	const sortName = sort.name;
+
+	const [isOpen, setIsOpen] = useState(false);
+
+	const onClickListItem = (obj) => {
+		dispatch(setSort(obj));
 		setIsOpen(false);
 	};
 
@@ -27,7 +35,7 @@ function Sort({ value, setValue, isDesc, setIsDesc }) {
 		<div className="sort">
 			<div className="sort__label">
 				<svg
-					onClick={() => setIsDesc(!isDesc)}
+					onClick={() => dispatch(setIsDesc(!isDesc))}
 					style={{ transform: isDesc ? "rotate(180deg)" : "" }}
 					width="10"
 					height="6"
@@ -50,7 +58,7 @@ function Sort({ value, setValue, isDesc, setIsDesc }) {
 								key={obj.sortProperty}
 								onClick={() => onClickListItem(obj)}
 								className={
-									value.sortProperty === obj.sortProperty ? "active" : ""
+									sort.sortProperty === obj.sortProperty ? "active" : ""
 								}>
 								{obj.name}
 							</li>

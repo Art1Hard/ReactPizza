@@ -5,24 +5,24 @@ import { Autoplay, FreeMode } from "swiper/modules";
 import "swiper/scss";
 
 import { useSelector, useDispatch } from "react-redux";
-import { setCatValue } from "../redux/slices/filterSlice";
+import { setCategoryIndex } from "../redux/slices/filterSlice";
+
+const categories = [
+	"Все",
+	"Мясные",
+	"Вегетарианские",
+	"Гриль",
+	"Острые",
+	"Закрытые",
+];
 
 function Categories() {
 	const swiperRef = useRef(null);
 
-	const filterIndex = useSelector((state) => state.filter.value);
+	const categoryIndex = useSelector((state) => state.filter.categoryIndex);
 	const dispatch = useDispatch();
 
 	console.log("Categories reload");
-
-	const categories = [
-		"Все",
-		"Мясные",
-		"Вегетарианские",
-		"Гриль",
-		"Острые",
-		"Закрытые",
-	];
 
 	return (
 		<div className="categories">
@@ -42,10 +42,10 @@ function Categories() {
 						<SwiperSlide key={index}>
 							<li
 								onClick={() => {
-									dispatch(setCatValue(index));
+									dispatch(setCategoryIndex(index));
 									swiperRef.current.swiper.slideTo(index);
 								}}
-								className={filterIndex === index ? "active" : ""}>
+								className={categoryIndex === index ? "active" : ""}>
 								{name}
 							</li>
 						</SwiperSlide>
