@@ -1,49 +1,55 @@
-import { useRef } from 'react'
+import { useRef } from "react";
 
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, FreeMode } from 'swiper/modules';
-import 'swiper/scss';
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, FreeMode } from "swiper/modules";
+import "swiper/scss";
 
-function Categories({ value, setValue }) {
+import { useSelector, useDispatch } from "react-redux";
+import { setCatValue } from "../redux/slices/filterSlice";
+
+function Categories() {
 	const swiperRef = useRef(null);
 
+	const filterIndex = useSelector((state) => state.filter.value);
+	const dispatch = useDispatch();
+
+	console.log("Categories reload");
+
 	const categories = [
-		'Все',
-		'Мясные',
-		'Вегетарианские',
-		'Гриль',
-		'Острые',
-		'Закрытые'
-	]
+		"Все",
+		"Мясные",
+		"Вегетарианские",
+		"Гриль",
+		"Острые",
+		"Закрытые",
+	];
 
 	return (
 		<div className="categories">
 			<ul>
 				<Swiper
-					className='swiper-categories'
+					className="swiper-categories"
 					modules={[Autoplay, FreeMode]}
 					spaceBetween={10}
-					slidesPerView='auto'
+					slidesPerView="auto"
 					freeMode
 					autoplay={{
 						delay: 4000,
 						disableOnInteraction: true,
 					}}
-					ref={swiperRef}
-				>
-					{
-						categories.map((name, index) =>
-							<SwiperSlide key={index}>
-								<li
-									onClick={() => {
-										setValue(index)
-										swiperRef.current.swiper.slideTo(index);
-									}}
-									className={value === index ? 'active' : ''}>
-									{name}
-								</li>
-							</SwiperSlide>)
-					}
+					ref={swiperRef}>
+					{categories.map((name, index) => (
+						<SwiperSlide key={index}>
+							<li
+								onClick={() => {
+									dispatch(setCatValue(index));
+									swiperRef.current.swiper.slideTo(index);
+								}}
+								className={filterIndex === index ? "active" : ""}>
+								{name}
+							</li>
+						</SwiperSlide>
+					))}
 				</Swiper>
 			</ul>
 		</div>

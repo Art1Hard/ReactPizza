@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom"
+import { Route, Routes } from "react-router-dom";
 import "./scss/app.scss";
 import Header from "./components/Header";
 import Home from "./pages/Home";
@@ -9,9 +9,7 @@ import { createContext, useState } from "react";
 export const SearchContext = createContext();
 
 function App() {
-	const [searchValue, setSearchValue] = useState('');
-
-	console.log(searchValue);
+	const [searchValue, setSearchValue] = useState("");
 
 	return (
 		<div className="wrapper">
