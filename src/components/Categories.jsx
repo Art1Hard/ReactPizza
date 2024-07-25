@@ -26,32 +26,31 @@ function Categories() {
 
 	return (
 		<div className="categories">
-			<ul>
-				<Swiper
-					className="swiper-categories"
-					modules={[Autoplay, FreeMode]}
-					spaceBetween={10}
-					slidesPerView="auto"
-					freeMode
-					autoplay={{
-						delay: 4000,
-						disableOnInteraction: true,
-					}}
-					ref={swiperRef}>
-					{categories.map((name, index) => (
-						<SwiperSlide key={index}>
-							<li
-								onClick={() => {
-									dispatch(setCategoryIndex(index));
-									swiperRef.current.swiper.slideTo(index);
-								}}
-								className={categoryIndex === index ? "active" : ""}>
-								{name}
-							</li>
-						</SwiperSlide>
-					))}
-				</Swiper>
-			</ul>
+			<Swiper
+				className="swiper-categories"
+				modules={[Autoplay, FreeMode]}
+				spaceBetween={10}
+				slidesPerView="auto"
+				freeMode
+				autoplay={{
+					delay: 4000,
+					disableOnInteraction: true,
+				}}
+				ref={swiperRef}
+				wrapperTag="ul">
+				{categories.map((name, index) => (
+					<SwiperSlide
+						tag="li"
+						key={index}
+						onClick={() => {
+							dispatch(setCategoryIndex(index));
+							swiperRef.current.swiper.slideTo(index);
+						}}
+						className={categoryIndex === index ? "active" : ""}>
+						{name}
+					</SwiperSlide>
+				))}
+			</Swiper>
 		</div>
 	);
 }
