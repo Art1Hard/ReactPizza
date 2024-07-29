@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 
@@ -21,8 +21,11 @@ export const sorts = [
 
 function Sort() {
 	const dispatch = useDispatch();
+
 	const { sort, isDesc } = useSelector((state) => state.filter);
 	const sortName = sort.name;
+
+	const sortRef = useRef();
 
 	const [isOpen, setIsOpen] = useState(false);
 
@@ -31,8 +34,21 @@ function Sort() {
 		setIsOpen(false);
 	};
 
+	//* Когда в первый раз создался компонент
+	useEffect(() => {
+		const handleClickOutside = (event) => {
+			if (!event.composedPath().includes(sortRef.current)) setIsOpen(false);
+			console.log("click");
+		};
+
+		document.body.addEventListener("click", handleClickOutside);
+
+		//* Когда компонент удалился
+		return () => document.body.removeEventListener("click", handleClickOutside);
+	}, []);
+
 	return (
-		<div className="sort">
+		<div ref={sortRef} className="sort">
 			<div className="sort__label">
 				<svg
 					onClick={() => dispatch(setIsDesc(!isDesc))}
