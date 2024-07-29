@@ -7,7 +7,7 @@ import "swiper/scss";
 import { useSelector, useDispatch } from "react-redux";
 import { setCategoryIndex } from "../redux/slices/filterSlice";
 
-const categories = [
+export const categories = [
 	"Все",
 	"Мясные",
 	"Вегетарианские",
@@ -21,8 +21,6 @@ function Categories() {
 
 	const categoryIndex = useSelector((state) => state.filter.categoryIndex);
 	const dispatch = useDispatch();
-
-	console.log("Categories reload");
 
 	return (
 		<div className="categories">
@@ -44,9 +42,9 @@ function Categories() {
 						key={index}
 						onClick={() => {
 							dispatch(setCategoryIndex(index));
-							swiperRef.current.swiper.slideTo(index);
+							swiperRef.current.swiper.slideTo(index, 600);
 						}}
-						className={categoryIndex === index ? "active" : ""}>
+						className={categoryIndex === index ? "active big-letter" : ""}>
 						{name}
 					</SwiperSlide>
 				))}

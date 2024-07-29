@@ -22,9 +22,15 @@ export const filterSlice = createSlice({
 		setIsDesc: (state, action) => {
 			state.isDesc = action.payload;
 		},
+		setFilters: (state, action) => {
+			state.sort = action.payload.sort;
+			state.categoryIndex = Number(action.payload.categoryIndex);
+			state.isDesc = JSON.parse(action.payload.sortIsDesc);
+		},
 	},
 });
 
-export const { setCategoryIndex, setSort, setIsDesc } = filterSlice.actions;
+export const { setCategoryIndex, setSort, setIsDesc, setFilters } =
+	filterSlice.actions;
 
 export default filterSlice.reducer;
