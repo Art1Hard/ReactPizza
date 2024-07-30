@@ -9,6 +9,10 @@ import {
 const CartItem = ({ id, title, type, size, price, imageUrl, count }) => {
 	const dispatch = useDispatch();
 
+	const confirm = () => {
+		return window.confirm("Вы уверены что хотите удалить позицию?");
+	};
+
 	const onClickPlus = () => {
 		dispatch(
 			addProduct({
@@ -19,6 +23,8 @@ const CartItem = ({ id, title, type, size, price, imageUrl, count }) => {
 	};
 
 	const onClickMinus = () => {
+		if (count <= 1) if (!confirm()) return;
+
 		dispatch(
 			removeProduct({
 				id,
@@ -28,7 +34,7 @@ const CartItem = ({ id, title, type, size, price, imageUrl, count }) => {
 	};
 
 	const onClickDelete = () => {
-		dispatch(removeProducts(id));
+		if (confirm()) dispatch(removeProducts(id));
 	};
 
 	return (
@@ -38,7 +44,9 @@ const CartItem = ({ id, title, type, size, price, imageUrl, count }) => {
 			</div>
 			<div className="cart__item-info">
 				<h3>{title}</h3>
-				<p>{type}, 26 см.</p>
+				<p>
+					{type}, {size} см.
+				</p>
 			</div>
 			<div className="cart__item-count">
 				<div
