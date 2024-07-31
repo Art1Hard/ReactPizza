@@ -1,18 +1,18 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import Categories, { categories } from "../components/Categories";
 import Sort, { sorts } from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock";
 import PizzaSkeleton from "../components/PizzaBlock/Skeleton";
 
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
 import { setFilters } from "../redux/slices/filterSlice";
+import { error, fetchPizzas, loading } from "../redux/slices/pizzaSlice";
 
 const Home = () => {
-	const [pizzas, setPizzas] = useState([]);
-	const [isLoading, setLoading] = useState(false);
+	const pizzas = useSelector((state) => state.pizza.items);
+	const status = useSelector((state) => state.pizza.status);
 
 	const isSearch = useRef(false);
 	const isMounted = useRef(false);
@@ -52,7 +52,7 @@ const Home = () => {
 		}
 	}, [dispatch]);
 
-	const fetchPizzas = useCallback(() => {
+	const getPizzas = useCallback(async () => {
 		const url = new URL("https://66966ea20312447373c28363.mockapi.io/items");
 		if (categoryIndex !== 0) url.searchParams.append("category", categoryIndex);
 
@@ -64,25 +64,14 @@ const Home = () => {
 
 		if (searchValue) url.searchParams.append("title", searchValue);
 
-		setLoading(true);
-
-		axios
-			.get(url)
-			.then((res) => {
-				setPizzas(res.data);
-				setLoading(false);
-			})
-			.catch((error) => {
-				if (error.response.status === 404) setPizzas([]);
-				setLoading(false);
-			});
-	}, [categoryIndex, sort, sortIsDesc, searchValue]);
+		dispatch(fetchPizzas(url));
+	}, [categoryIndex, sort, sortIsDesc, searchValue, dispatch]);
 
 	useEffect(() => {
-		if (!isSearch.current) fetchPizzas();
+		if (!isSearch.current) getPizzas();
 		isSearch.current = false;
 		window.scrollTo(0, 0);
-	}, [fetchPizzas]);
+	}, [getPizzas]);
 
 	const pizzaBlocks = pizzas.map((pizza) => (
 		<PizzaBlock key={pizza.id} {...pizza} />
@@ -100,9 +89,9 @@ const Home = () => {
 			</div>
 			<h2 className="content__title">{categories[categoryIndex]} пиццы</h2>
 			<div className="content__items">
-				{isLoading ? (
+				{status === loading ? (
 					pizzaSkeletons
-				) : !pizzas.length ? (
+				) : status === error ? (
 					<h3 style={{ textAlign: "left" }}>Пиццы не найдены...</h3>
 				) : (
 					pizzaBlocks
