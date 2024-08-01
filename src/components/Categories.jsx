@@ -5,7 +5,10 @@ import { Autoplay, FreeMode } from "swiper/modules";
 import "swiper/scss";
 
 import { useSelector, useDispatch } from "react-redux";
-import { setCategoryIndex } from "../redux/slices/filterSlice";
+import {
+	filterCategoryIdSelector,
+	setCategoryIndex,
+} from "../redux/slices/filterSlice";
 
 export const categories = [
 	"Все",
@@ -19,7 +22,7 @@ export const categories = [
 function Categories() {
 	const swiperRef = useRef(null);
 
-	const categoryIndex = useSelector((state) => state.filter.categoryIndex);
+	const categoryIndex = useSelector(filterCategoryIdSelector);
 	const dispatch = useDispatch();
 
 	return (

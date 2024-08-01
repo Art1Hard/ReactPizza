@@ -2,7 +2,11 @@ import { useEffect, useRef, useState } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 
-import { setSort, setIsDesc } from "../redux/slices/filterSlice";
+import {
+	setSort,
+	setIsDesc,
+	filterSelector,
+} from "../redux/slices/filterSlice";
 
 export const sorts = [
 	{
@@ -22,7 +26,7 @@ export const sorts = [
 function Sort() {
 	const dispatch = useDispatch();
 
-	const { sort, isDesc } = useSelector((state) => state.filter);
+	const { sort, isDesc } = useSelector(filterSelector);
 	const sortName = sort.name;
 
 	const sortRef = useRef();

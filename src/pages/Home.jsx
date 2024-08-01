@@ -7,20 +7,31 @@ import PizzaSkeleton from "../components/PizzaBlock/Skeleton";
 import { useDispatch, useSelector } from "react-redux";
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
-import { setFilters } from "../redux/slices/filterSlice";
-import { error, fetchPizzas, loading } from "../redux/slices/pizzaSlice";
+import {
+	filterIsDescSelector,
+	filterSelector,
+	setFilters,
+} from "../redux/slices/filterSlice";
+import {
+	error,
+	fetchPizzas,
+	loading,
+	pizzaItemsSelector,
+	pizzaStatusSelector,
+} from "../redux/slices/pizzaSlice";
+import { searchValueSelector } from "../redux/slices/searchSlice";
 
 const Home = () => {
-	const pizzas = useSelector((state) => state.pizza.items);
-	const status = useSelector((state) => state.pizza.status);
+	const pizzas = useSelector(pizzaItemsSelector);
+	const status = useSelector(pizzaStatusSelector);
 
 	const isSearch = useRef(false);
 	const isMounted = useRef(false);
 
-	const searchValue = useSelector((state) => state.search.searchValue);
+	const searchValue = useSelector(searchValueSelector);
 
-	const { categoryIndex, sort } = useSelector((state) => state.filter);
-	const sortIsDesc = useSelector((state) => state.filter.isDesc);
+	const { categoryIndex, sort } = useSelector(filterSelector);
+	const sortIsDesc = useSelector(filterIsDescSelector);
 
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
