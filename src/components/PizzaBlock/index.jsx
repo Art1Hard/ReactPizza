@@ -21,7 +21,8 @@ function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
 		price = "0";
 	}
 
-	const onClickAdd = () => {
+	const onClickAdd = (event) => {
+		event.preventDefault();
 		const item = {
 			id,
 			title,
@@ -43,7 +44,10 @@ function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
 					{types.map((type, index) => (
 						<li
 							key={type}
-							onClick={() => setActiveType(index)}
+							onClick={(event) => {
+								event.preventDefault();
+								setActiveType(index);
+							}}
 							className={activeType === index ? "active" : ""}>
 							{typeNames[type]}
 						</li>
@@ -53,7 +57,10 @@ function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
 					{sizes.map((size, index) => (
 						<li
 							key={size}
-							onClick={() => setActiveSize(index)}
+							onClick={(event) => {
+								event.preventDefault();
+								setActiveSize(index);
+							}}
 							className={activeSize === index ? "active" : ""}>
 							{size} см.
 						</li>
@@ -63,7 +70,7 @@ function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
 			<div className="pizza-block__bottom">
 				<div className="pizza-block__price">от {price} ₽</div>
 				<button
-					onClick={onClickAdd}
+					onClick={(event) => onClickAdd(event)}
 					type="button"
 					className="button button--outline button--add">
 					<svg

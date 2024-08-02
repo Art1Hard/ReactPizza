@@ -6,7 +6,7 @@ import PizzaSkeleton from "../components/PizzaBlock/Skeleton";
 
 import { useDispatch, useSelector } from "react-redux";
 import qs from "qs";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
 	filterIsDescSelector,
 	filterSelector,
@@ -85,7 +85,9 @@ const Home = () => {
 	}, [getPizzas]);
 
 	const pizzaBlocks = pizzas.map((pizza) => (
-		<PizzaBlock key={pizza.id} {...pizza} />
+		<Link to={`/pizza/${pizza.id}`} key={pizza.id}>
+			<PizzaBlock {...pizza} />
+		</Link>
 	));
 
 	const pizzaSkeletons = [...new Array(4)].map((_, index) => (
