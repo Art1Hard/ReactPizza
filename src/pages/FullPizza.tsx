@@ -1,21 +1,25 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import NotFound from "./NotFound";
 
-const FullPizza = () => {
-	const [pizza, setPizza] = useState();
+const FullPizza: React.FC = () => {
+	const [pizza, setPizza] = useState<{
+		imageUrl: string;
+		title: string;
+		price: number;
+	}>();
 	const { id } = useParams();
-	const [pizzaNotFound, setPizzaNotFound] = useState();
+	const [pizzaNotFound, setPizzaNotFound] = useState<number>();
 
 	useEffect(() => {
 		const fetchPizza = async () => {
 			try {
-				const url = `https://66966ea20312447373c28363.mockapi.io/items/${id}`;
+				const url: string = `https://66966ea20312447373c28363.mockapi.io/items/${id}`;
 				const { data } = await axios.get(url);
 				setPizza(data);
 			} catch (error) {
-				setPizzaNotFound(error.request.status);
+				if (axios.isAxiosError(error)) setPizzaNotFound(error.request.status);
 			}
 		};
 
