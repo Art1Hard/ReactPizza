@@ -1,0 +1,27 @@
+.root {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	row-gap: 20px;
+}
+
+.img {
+	max-width: 50%;
+	height: auto;
+}
+
+.title {
+	font-size: 42px;
+}
+
+.price {
+	font-size: 26px;
+}
+
+.buttonExit {
+	width: 100%;
+	max-width: 50%;
+	span {
+		font-size: 18px;
+	}
+}
