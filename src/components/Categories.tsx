@@ -1,6 +1,6 @@
-import { useRef } from "react";
+import React, { useRef } from "react";
 
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper, SwiperRef, SwiperSlide } from "swiper/react";
 import { Autoplay, FreeMode } from "swiper/modules";
 import "swiper/scss";
 
@@ -19,11 +19,16 @@ export const categories = [
 	"Закрытые",
 ];
 
-function Categories() {
-	const swiperRef = useRef(null);
+const Categories: React.FC = () => {
+	const swiperRef = useRef<SwiperRef>(null);
 
 	const categoryIndex = useSelector(filterCategoryIdSelector);
 	const dispatch = useDispatch();
+
+	const swiperSlideTo = (
+		swiperRef: React.RefObject<SwiperRef>,
+		index: number
+	) => swiperRef.current?.swiper.slideTo(index, 600);
 
 	return (
 		<div className="categories">
@@ -45,7 +50,7 @@ function Categories() {
 						key={index}
 						onClick={() => {
 							dispatch(setCategoryIndex(index));
-							swiperRef.current.swiper.slideTo(index, 600);
+							swiperSlideTo(swiperRef, index);
 						}}
 						className={categoryIndex === index ? "active big-letter" : ""}>
 						{name}
@@ -54,6 +59,6 @@ function Categories() {
 			</Swiper>
 		</div>
 	);
-}
+};
 
 export default Categories;

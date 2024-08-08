@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 import Categories, { categories } from "../components/Categories";
 import Sort, { sorts } from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock";
@@ -21,7 +21,7 @@ import {
 } from "../redux/slices/pizzaSlice";
 import { searchValueSelector } from "../redux/slices/searchSlice";
 
-const Home = () => {
+const Home: React.FC = () => {
 	const pizzas = useSelector(pizzaItemsSelector);
 	const status = useSelector(pizzaStatusSelector);
 
@@ -64,7 +64,9 @@ const Home = () => {
 	}, [dispatch]);
 
 	const getPizzas = useCallback(async () => {
-		const url = new URL("https://66966ea20312447373c28363.mockapi.io/items");
+		const url: any = new URL(
+			"https://66966ea20312447373c28363.mockapi.io/items"
+		);
 		if (categoryIndex !== 0) url.searchParams.append("category", categoryIndex);
 
 		url.searchParams.append("sortby", sort.sortProperty);
@@ -75,6 +77,8 @@ const Home = () => {
 
 		if (searchValue) url.searchParams.append("title", searchValue);
 
+		//!!!!!!!!!!!
+		//@ts-ignore
 		dispatch(fetchPizzas(url));
 	}, [categoryIndex, sort, sortIsDesc, searchValue, dispatch]);
 
@@ -84,7 +88,7 @@ const Home = () => {
 		window.scrollTo(0, 0);
 	}, [getPizzas]);
 
-	const pizzaBlocks = pizzas.map((pizza) => (
+	const pizzaBlocks = pizzas.map((pizza: any) => (
 		<Link to={`/pizza/${pizza.id}`} key={pizza.id}>
 			<PizzaBlock {...pizza} />
 		</Link>
