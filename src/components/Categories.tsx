@@ -25,10 +25,15 @@ const Categories: React.FC = () => {
 	const categoryIndex = useSelector(filterCategoryIdSelector);
 	const dispatch = useDispatch();
 
-	const swiperSlideTo = (
-		swiperRef: React.RefObject<SwiperRef>,
-		index: number
-	) => swiperRef.current?.swiper.slideTo(index, 600);
+	type ChangeCategory = (
+		index: number,
+		ref: React.RefObject<SwiperRef>
+	) => void;
+
+	const onChangeCategory: ChangeCategory = (index, swiperRef) => {
+		dispatch(setCategoryIndex(index));
+		swiperRef.current?.swiper.slideTo(index, 600);
+	};
 
 	return (
 		<div className="categories">
@@ -48,10 +53,7 @@ const Categories: React.FC = () => {
 					<SwiperSlide
 						tag="li"
 						key={index}
-						onClick={() => {
-							dispatch(setCategoryIndex(index));
-							swiperSlideTo(swiperRef, index);
-						}}
+						onClick={() => onChangeCategory(index, swiperRef)}
 						className={categoryIndex === index ? "active big-letter" : ""}>
 						{name}
 					</SwiperSlide>
