@@ -24,8 +24,11 @@
 		"typescript": "^4.9.5",
 		"web-vitals": "^2.1.4"
 	},
+	"homepage": "https://Art1Hard.github.io/ReactPizza",
 	"scripts": {
 		"dev": "react-scripts start",
+		"predeploy": "npm run build",
+		"deploy": "gh-pages -d build",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject"
@@ -52,6 +55,7 @@
 		"@babel/plugin-proposal-private-property-in-object": "^7.21.11",
 		"@types/lodash.debounce": "^4.0.9",
 		"axios": "^1.7.2",
+		"gh-pages": "^6.1.1",
 		"sass": "^1.77.8"
 	}
 }

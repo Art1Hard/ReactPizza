@@ -14,7 +14,7 @@ const CartEmpty: React.FC = () => {
 				src="https://react-pizza-v2.vercel.app/static/media/empty-cart.db905d1f4b063162f25b.png"
 				alt="Empty cart"
 			/>
-			<Link to="/" className="button button--black">
+			<Link to="/ReactPizza" className="button button--black">
 				<span>Вернуться назад</span>
 			</Link>
 		</div>

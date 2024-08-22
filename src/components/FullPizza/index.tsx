@@ -41,7 +41,7 @@ const FullPizza: React.FC = () => {
 			<h2 className={styles.title}>{pizza.title}</h2>
 			<h4 className={styles.price}>{pizza.price} ₽</h4>
 			<Link
-				to="/"
+				to="/ReactPizza"
 				className={`button button--outline button--add go-back-btn ${styles.buttonExit}`}>
 				<span>Вернуться назад</span>
 			</Link>

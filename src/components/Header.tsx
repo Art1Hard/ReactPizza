@@ -12,7 +12,7 @@ const Header: React.FC = () => {
 	return (
 		<div className="header">
 			<div className="container">
-				<Link to="/">
+				<Link to="/ReactPizza">
 					<div className="header__logo">
 						<img width="38" src={pizzaLogo} alt="Pizza logo" />
 						<div>
@@ -21,12 +21,12 @@ const Header: React.FC = () => {
 						</div>
 					</div>
 				</Link>
-				{pathname === "/" && <Search />}
-				{pathname !== "/cart" && (
+				{pathname === "/ReactPizza" && <Search />}
+				{pathname !== "/ReactPizza/cart" && (
 					<>
 						{" "}
 						<div className="header__cart">
-							<Link to="/cart" className="button button--cart">
+							<Link to="cart" className="button button--cart">
 								<span>{totalPrice} ₽</span>
 								<div className="button__delimiter"></div>
 								<svg

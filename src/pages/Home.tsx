@@ -89,7 +89,7 @@ const Home: React.FC = () => {
 	}, [getPizzas]);
 
 	const pizzaBlocks = pizzas.map((pizza: any) => (
-		<Link to={`/pizza/${pizza.id}`} key={pizza.id}>
+		<Link to={`pizza/${pizza.id}`} key={pizza.id}>
 			<PizzaBlock {...pizza} />
 		</Link>
 	));
